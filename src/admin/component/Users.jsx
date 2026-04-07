@@ -14,7 +14,7 @@ const Users = () => {
   const getUser = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8080/user/allusers", {
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/user/allusers", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -38,7 +38,7 @@ const Users = () => {
   const makeStaff = async (id) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8080/user/update/${id}`, {
+      const res = await fetch(`https://rivo-ecommerce-db.onrender.com/user/update/${id}`, {
         method: "PATCH",
         headers: {
           authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const Users = () => {
   const RemoveStaff = async (id) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8080/user/disable/${id}`, {
+      const res = await fetch(`https://rivo-ecommerce-db.onrender.com/user/disable/${id}`, {
         method: "PATCH",
         headers: {
           authorization: `Bearer ${token}`,

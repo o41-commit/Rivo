@@ -20,7 +20,7 @@ const AllProducts = () => {
   const getProduct = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8080/product/items", {
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/product/items", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ const AllProducts = () => {
   const deleteProduct = async (id) => {
     setLoading(true);
     try {
-      await fetch(`http://localhost:8080/product/delete/${id}`, {
+      await fetch(`https://rivo-ecommerce-db.onrender.com/product/delete/${id}`, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ const AllProducts = () => {
       };
 
       await fetch(
-        `http://localhost:8080/product/item/edit/${selectedProduct._id}`,
+        `https://rivo-ecommerce-db.onrender.com/product/item/edit/${selectedProduct._id}`,
         {
           method: "PUT",
           headers: {

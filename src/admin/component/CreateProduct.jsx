@@ -63,7 +63,7 @@ const CreateProduct = () => {
         data.append("images", img);
       });
 
-      const res = await fetch("http://localhost:8080/product/create", {
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/product/create", {
         method: "POST",
         headers: {
           authorization: `Bearer ${token}`,
@@ -114,6 +114,7 @@ const CreateProduct = () => {
             Add a new product to your store inventory
           </p>
         </div>
+        
 
         {/* LOADING */}
         {loading && (

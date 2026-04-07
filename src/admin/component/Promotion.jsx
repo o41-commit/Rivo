@@ -11,7 +11,7 @@ const Promotion = () => {
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
 
-  const BASE_URL = "http://localhost:8080/promotion";
+  const BASE_URL = "https://rivo-ecommerce-db.onrender.com/promotion";
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();

@@ -13,7 +13,7 @@ const Orders = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:8080/staff/confirm-order/all",
+        "https://rivo-ecommerce-db.onrender.com/staff/confirm-order/all",
         {
           headers: {
             "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const Orders = () => {
   const approveOrder = async (id) => {
     try {
       await fetch(
-        `http://localhost:8080/staff/confirm-order/confirm/${id}`,
+        `https://rivo-ecommerce-db.onrender.com/staff/confirm-order/confirm/${id}`,
         {
           method: "PUT",
           headers: {
@@ -63,7 +63,7 @@ const Orders = () => {
   const shipOrder = async (id) => {
     try {
       await fetch(
-        `http://localhost:8080/staff/confirm-order/approve/${id}`,
+        `https://rivo-ecommerce-db.onrender.com/staff/confirm-order/approve/${id}`,
         {
           method: "PUT",
           headers: {

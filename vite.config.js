@@ -4,12 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
-    react(),          // You need this for React
+    react(),          // needed for React JSX
     tailwindcss(),
   ],
-  base: './',         // ✅ critical for Vercel
-  server: {
-    port: 3000
-  }
-  
+  base: './',         // critical: makes assets load correctly on Vercel
 })

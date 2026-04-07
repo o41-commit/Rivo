@@ -25,7 +25,7 @@ import Settings from "./page/Settings";
 import Login from "./page/Login";
 import Register from "./page/Register";
 import Cart from "./page/Cart";
-import Checkout from "./page/CheckOut";
+import Checkout from "./page/Checkout";
 import Success from "./page/Success";
 import ProductDetails from "./page/ProductDetails";
 

@@ -20,7 +20,7 @@ const Hot = () => {
     try {
       setPageLoading(true);
 
-      const res = await fetch("http://localhost:8080/items/all");
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/items/all");
       const data = await res.json();
 
       const hotItems = data.filter(
@@ -52,7 +52,7 @@ const Hot = () => {
     try {
       setCartLoadingId(productId);
 
-      const res = await fetch("http://localhost:8080/cart/add", {
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/cart/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

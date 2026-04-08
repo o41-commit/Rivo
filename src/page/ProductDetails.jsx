@@ -21,7 +21,9 @@ const ProductDetails = () => {
         const storedGuestId = localStorage.getItem("guest_id");
         if (storedGuestId) setGuestId(storedGuestId);
         else {
-          const res = await fetch("https://rivo-ecommerce-db.onrender.com/cart/guest/new");
+          const res = await fetch(
+            "https://rivo-ecommerce-db.onrender.com/cart/guest/new",
+          );
           const data = await res.json();
           localStorage.setItem("guest_id", data.guestId);
           setGuestId(data.guestId);
@@ -35,7 +37,9 @@ const ProductDetails = () => {
   const fetchProduct = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch(`https://rivo-ecommerce-db.onrender.com/items/${id}`);
+      const res = await fetch(
+        `https://rivo-ecommerce-db.onrender.com/items/${id}`,
+      );
       if (!res.ok) throw new Error("Product not found");
       const data = await res.json();
       setProduct(data);
@@ -55,18 +59,21 @@ const ProductDetails = () => {
   const addToCart = async (productId, quantity = 1) => {
     try {
       setCartLoadingId(productId);
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/cart/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
+      const res = await fetch(
+        "https://rivo-ecommerce-db.onrender.com/cart/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            productId,
+            quantity,
+            guestId: token ? null : guestId,
+          }),
         },
-        body: JSON.stringify({
-          productId,
-          quantity,
-          guestId: token ? null : guestId,
-        }),
-      });
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to add to cart");
@@ -93,9 +100,7 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6fff9] to-white pt-[100px] pb-[80px] px-4 md:px-8 lg:px-16">
-      {/* GRID */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        {/* IMAGE */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -108,7 +113,6 @@ const ProductDetails = () => {
           />
         </motion.div>
 
-        {/* INFO */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -124,12 +128,13 @@ const ProductDetails = () => {
             </p>
 
             <p className="text-sm md:text-base lg:text-lg text-gray-600 mt-4 leading-relaxed break-words">
-  {product.description}
-</p>
+              {product.description}
+            </p>
 
-            {/* QUANTITY */}
             <div className="flex items-center gap-4 mt-6">
-              <span className="font-medium text-sm md:text-base lg:text-lg">Quantity:</span>
+              <span className="font-medium text-sm md:text-base lg:text-lg">
+                Quantity:
+              </span>
               <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 md:px-4 md:py-2">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -150,7 +155,6 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* ADD TO CART BUTTON */}
           <motion.button
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.03 }}
@@ -168,7 +172,6 @@ const ProductDetails = () => {
         </motion.div>
       </div>
 
-      {/* REVIEWS */}
       <div className="max-w-4xl mx-auto mt-12 md:mt-16">
         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#224F34] mb-4 md:mb-6">
           Customer Reviews
@@ -199,7 +202,9 @@ const ProductDetails = () => {
               </motion.div>
             ))
           ) : (
-            <p className="text-gray-500 text-sm md:text-base lg:text-lg">No reviews yet.</p>
+            <p className="text-gray-500 text-sm md:text-base lg:text-lg">
+              No reviews yet.
+            </p>
           )}
         </div>
       </div>

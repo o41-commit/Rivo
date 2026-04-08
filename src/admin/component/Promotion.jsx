@@ -22,7 +22,6 @@ const Promotion = () => {
     },
   };
 
-  // ✅ FETCH
   const fetchPromotions = async () => {
     try {
       setFetching(true);
@@ -57,10 +56,9 @@ const Promotion = () => {
     fetchPromotions();
   }, []);
 
-  // ✅ CREATE
   const handleCreate = async () => {
     if (!title || !message) {
-      // alert("All fields are required");
+
       return;
     }
 
@@ -73,21 +71,20 @@ const Promotion = () => {
       setMessage("");
 
       fetchPromotions();
-    } catch (err) {
-      // alert("Failed to create promotion");
+    } catch (error) {
+      console.error("error message:", error)
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ DELETE
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/delete/${id}`, config);
 
       setPromotions((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
-      // alert("Failed to delete promotion");
       console.error(err);
     }
   };
@@ -113,7 +110,6 @@ const Promotion = () => {
             </div>
           </div>
 
-          {/* FORM */}
           <div className="flex flex-col gap-4 flex-1">
             <input
               value={title}
@@ -130,7 +126,6 @@ const Promotion = () => {
             />
           </div>
 
-          {/* BUTTON */}
           <div className="mt-6">
             <button
               onClick={handleCreate}
@@ -142,7 +137,6 @@ const Promotion = () => {
           </div>
         </div>
 
-        {/* 🔹 LIST SECTION */}
         <div className="bg-white rounded-2xl shadow-sm p-5 sm:p-8">
           <h3 className="text-lg sm:text-xl font-bold text-green-900 mb-4">
             Promotions

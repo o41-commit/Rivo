@@ -73,7 +73,6 @@ const Orders = () => {
         }
       );
 
-      // update UI instantly
       setOrders((prev) =>
         prev.map((order) =>
           order._id === id ? { ...order, status: "shipped" } : order
@@ -114,7 +113,6 @@ const Orders = () => {
     <div className="min-h-screen bg-[#f6fff9] p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
 
-        {/* HEADER */}
         <div className="mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-green-900">
             Orders Overview
@@ -126,7 +124,6 @@ const Orders = () => {
 
         {loading && <Spinner />}
 
-        {/* ORDER LIST */}
         <div className="flex flex-col gap-5">
           {orders.map((order) => (
             <div
@@ -135,7 +132,6 @@ const Orders = () => {
             >
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
 
-                {/* ORDER INFO */}
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-green-900">
                     Order #{order._id}

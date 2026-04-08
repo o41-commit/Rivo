@@ -12,11 +12,9 @@ const AllProducts = () => {
 
   const [products, setProducts] = useState([]);
 
-  // EDIT STATE
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // FETCH PRODUCTS
   const getProduct = async () => {
     setLoading(true);
     try {
@@ -52,7 +50,7 @@ const AllProducts = () => {
         },
       });
 
-      getProduct(); // refresh list
+      getProduct(); 
     } catch (error) {
       console.error(error);
     } finally {
@@ -60,13 +58,11 @@ const AllProducts = () => {
     }
   };
 
-  // EDIT CLICK
   const handleEditClick = (product) => {
     setSelectedProduct(product);
     setShowModal(true);
   };
 
-  // UPDATE PRODUCT
   const handleUpdate = async () => {
     try {
       const payload = {
@@ -111,7 +107,6 @@ const AllProducts = () => {
   return (
     <div className="min-h-screen bg-[#f6fff9] p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
-        {/* HEADER */}
         <div className="mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-green-900">
             Product Management
@@ -121,7 +116,6 @@ const AllProducts = () => {
           </p>
         </div>
 
-        {/* SEARCH */}
         <div className="relative mb-6">
           <IoSearchOutline
             className="absolute left-3 top-1/2 -translate-y-1/2 text-green-900/60"
@@ -137,7 +131,6 @@ const AllProducts = () => {
 
         {loading && <Spinner />}
 
-        {/* PRODUCTS */}
         <div className="flex flex-col gap-4">
           {filtered.map((item) => (
             <div
@@ -180,7 +173,6 @@ const AllProducts = () => {
           ))}
         </div>
 
-        {/* EMPTY */}
         {filtered.length === 0 && !loading && (
           <div className="text-center mt-10 text-green-800/70">
             No products found.
@@ -188,7 +180,6 @@ const AllProducts = () => {
         )}
       </div>
 
-      {/* ================= MODAL ================= */}
       {showModal && selectedProduct && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-lg">

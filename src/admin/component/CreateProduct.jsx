@@ -7,7 +7,6 @@ const CreateProduct = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  // TEXT STATE
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -17,19 +16,15 @@ const CreateProduct = () => {
     description: "",
   });
 
-  // FILE STATE
   const [images, setImages] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
 
-  // UI STATE
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // INPUT STYLE (Reusable)
   const inputClass =
     "w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder:text-gray-400";
 
-  // HANDLE TEXT INPUT
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -37,7 +32,6 @@ const CreateProduct = () => {
     });
   };
 
-  // HANDLE FILE INPUT
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
@@ -46,7 +40,6 @@ const CreateProduct = () => {
     setPreviewUrls(urls);
   };
 
-  // SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -114,25 +107,21 @@ const CreateProduct = () => {
             Add a new product to your store inventory
           </p>
         </div>
-        
 
-        {/* LOADING */}
+
         {loading && (
           <div className="flex justify-center my-4">
             <Spinner />
           </div>
         )}
 
-        {/* MESSAGE */}
         {message && (
           <div className="mb-4 text-center text-sm font-medium text-green-700 bg-green-50 border border-green-200 p-3 rounded-xl">
             {message}
           </div>
         )}
 
-        {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* INPUT GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               placeholder="Product Name"
@@ -176,7 +165,6 @@ const CreateProduct = () => {
             />
           </div>
 
-          {/* DESCRIPTION */}
           <textarea
             placeholder="Product Description..."
             name="description"
@@ -185,7 +173,6 @@ const CreateProduct = () => {
             className={`${inputClass} min-h-[120px] resize-none`}
           />
 
-          {/* IMAGE UPLOAD */}
           <div>
             <label className="block font-semibold text-gray-700 mb-2">
               Product Images
@@ -214,7 +201,6 @@ const CreateProduct = () => {
               />
             </label>
 
-            {/* PREVIEW */}
             {previewUrls.length > 0 && (
               <div className="flex flex-wrap gap-4 mt-4">
                 {previewUrls.map((url, index) => (
@@ -237,7 +223,6 @@ const CreateProduct = () => {
             )}
           </div>
 
-          {/* BUTTON */}
           <div>
             <button
               type="submit"

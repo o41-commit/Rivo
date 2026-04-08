@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState("Login");
   const [formData, setFormData] = useState({
     password: "",
     email: "",
@@ -17,15 +18,19 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading("Logging in...");
 
     try {
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://rivo-ecommerce-db.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         },
-        body: JSON.stringify(formData),
-      });
+      );
 
       const data = await res.json();
       // console.log(data, "login response");
@@ -49,14 +54,17 @@ const Login = () => {
       localStorage.setItem("token", token);
       if (guestId) {
         const merge = async () => {
-          const res = await fetch("https://rivo-ecommerce-db.onrender.com/auth/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `Bearer ${token}`,
+          const res = await fetch(
+            "https://rivo-ecommerce-db.onrender.com/auth/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(guestId),
             },
-            body: JSON.stringify(guestId),
-          });
+          );
 
           const data = await res.json();
         };
@@ -64,6 +72,8 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error, "error submiting");
+    } finally {
+      setLoading("Login");
     }
   };
 
@@ -97,7 +107,7 @@ const Login = () => {
             type="submit"
             className="w-full  cursor-pointer active:scale-95 transition-all duration-200 bg-green-900 text-white py-3 rounded-lg"
           >
-            Login
+            {loading}
           </button>
         </form>
 

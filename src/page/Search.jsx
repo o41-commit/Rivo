@@ -9,7 +9,8 @@ const Search = () => {
   const getProduct = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/product/items");
+      const res = await fetch("https://rivo-ecommerce-db.onrender.com/items/all");
+      
       const data = await res.json();
       setProducts(Array.isArray(data) ? data : []);
     } catch (error) {

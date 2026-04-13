@@ -20,7 +20,9 @@ const Hot = () => {
     try {
       setPageLoading(true);
 
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/items/all");
+      const res = await fetch(
+        "https://rivo-ecommerce-db.onrender.com/items/all"
+      );
       const data = await res.json();
 
       const hotItems = data.filter(
@@ -52,20 +54,21 @@ const Hot = () => {
     try {
       setCartLoadingId(productId);
 
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/cart/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: JSON.stringify({
-          quantity: 1,
-          productId,
-          guestId: token ? null : guestId,
-        }),
-      });
-
-      const data = await res.json();
+      await fetch(
+        "https://rivo-ecommerce-db.onrender.com/cart/add",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            quantity: 1,
+            productId,
+            guestId: token ? null : guestId,
+          }),
+        }
+      );
     } catch (error) {
       console.error("Error adding to cart:", error);
     } finally {
@@ -77,10 +80,13 @@ const Hot = () => {
     getItems();
   }, []);
 
+  // ================= PAGE LOADING (PRO UI FIX) =================
   if (pageLoading) {
     return (
       <div className="flex justify-center items-center h-40">
-        <Spinner />
+        <div className="scale-75 sm:scale-90 md:scale-100">
+          <Spinner />
+        </div>
       </div>
     );
   }
@@ -91,7 +97,7 @@ const Hot = () => {
         items.map((item) => (
           <Link to={`/product/${item._id}`} key={item._id}>
             <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
-              {/* Image */}
+              {/* IMAGE */}
               <div className="relative">
                 <img
                   src={item.images?.[0]}
@@ -99,26 +105,23 @@ const Hot = () => {
                   className="w-full h-[180px] md:h-48 lg:h-56 xl:h-60 object-cover group-hover:scale-105 transition duration-300"
                 />
 
-                {/* Badge */}
                 <span className="absolute top-2 left-2 bg-green-600 text-white text-xs md:text-sm px-2 py-1 rounded-full">
                   NEW
                 </span>
               </div>
 
-              {/* Content */}
+              {/* CONTENT */}
               <div className="p-3 md:p-4">
-                {/* Name */}
                 <h2 className="text-sm md:text-base lg:text-lg font-semibold text-gray-800 truncate">
                   {userName(item.name)}
                 </h2>
 
-                {/* Rating */}
                 <div className="flex items-center gap-1 text-sm md:text-base text-gray-500 mt-1">
                   <FaStar className="text-yellow-400" />
                   <span>5.0</span>
                 </div>
 
-                {/* Price + Button */}
+                {/* PRICE + BUTTON */}
                 <div className="flex items-center justify-between mt-3">
                   <p className="text-lg md:text-xl font-bold text-green-700">
                     ₦{item.price}
@@ -133,7 +136,7 @@ const Hot = () => {
                     className="bg-green-600 text-white p-2 md:p-3 rounded-full hover:bg-green-700 transition flex items-center justify-center"
                   >
                     {cartLoadingId === item._id ? (
-                      <div className="scale-75">
+                      <div className="scale-50 sm:scale-75 md:scale-90">
                         <Spinner />
                       </div>
                     ) : (

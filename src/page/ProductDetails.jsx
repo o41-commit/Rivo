@@ -152,7 +152,7 @@ const ProductDetails = () => {
           {/* SIZE DISPLAY */}
           <div className="mt-4">
             <span className="font-semibold text-gray-800">Available Sizes: </span>
-            <span className="text-gray-600">{sizes}</span>
+            <span className="text-gray-600">{product.size}</span>
           </div>
 
           {/* COLOR DISPLAY */}

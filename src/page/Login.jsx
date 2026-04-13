@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Spinner from "../componnent/Spinner";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState("Login");
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     password: "",
     email: "",
   });
+
   const guestId = localStorage.getItem("guest_id");
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -18,7 +22,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading("Logging in...");
+
+    if (loading) return; // prevent double click
+    setLoading(true);
+    setError("");
 
     try {
       const res = await fetch(
@@ -29,32 +36,28 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        },
+        }
       );
 
       const data = await res.json();
-      // console.log(data, "login response");
 
       if (!res.ok) {
-        setError(data.message);
+        setError(data.message || "Login failed");
         return;
       }
 
-      if (data.role === "admin") {
-        window.location.href = "/admin";
-      }
-      if (data.role === "user") {
-        window.location.href = "/";
-      }
-      if (data.role === "staff") {
-        window.location.href = "/staff";
-      }
-
-      let token = data.token;
+      const token = data.token;
       localStorage.setItem("token", token);
+
+      // role redirect
+      if (data.role === "admin") window.location.href = "/admin";
+      if (data.role === "user") window.location.href = "/";
+      if (data.role === "staff") window.location.href = "/staff";
+
+      // merge guest cart
       if (guestId) {
-        const merge = async () => {
-          const res = await fetch(
+        try {
+          await fetch(
             "https://rivo-ecommerce-db.onrender.com/auth/login",
             {
               method: "POST",
@@ -62,18 +65,18 @@ const Login = () => {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${token}`,
               },
-              body: JSON.stringify(guestId),
-            },
+              body: JSON.stringify({ guestId }),
+            }
           );
-
-          const data = await res.json();
-        };
-        merge();
+        } catch (err) {
+          console.error("Merge failed");
+        }
       }
     } catch (error) {
-      console.error(error, "error submiting");
+      console.error(error);
+      setError("Something went wrong");
     } finally {
-      setLoading("Login");
+      setLoading(false);
     }
   };
 
@@ -105,14 +108,26 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full  cursor-pointer active:scale-95 transition-all duration-200 bg-green-900 text-white py-3 rounded-lg"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-200
+              ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-900 cursor-pointer active:scale-95"
+              } text-white`}
           >
-            {loading}
+            {loading ? (
+              <>
+                <Spinner /> Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 
         <p className="text-sm text-center mt-4">
-          Don't have an account?
+          Don't have an account?{" "}
           <Link to="/register">
             <span className="text-green-900">Register</span>
           </Link>

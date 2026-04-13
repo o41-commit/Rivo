@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Spinner from "../componnent/Spinner";
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [visibleCount, setVisibleCount] = useState(12);
 
   const formatPrice = (price) => Number(price).toLocaleString();
@@ -48,36 +48,41 @@ const Search = () => {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            setVisibleCount(12); // reset when searching
+            setVisibleCount(12);
           }}
           className="w-full p-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[#224F34]"
         />
       </div>
 
+      {/* LOADING */}
       {loading ? (
         <div className="flex justify-center items-center mt-20">
           <Spinner />
         </div>
       ) : (
         <>
+          {/* RESULTS HEADER */}
           <h2 className="text-lg font-semibold text-[#224F34] mb-4">
             Results ({filteredProducts.length})
           </h2>
 
+          {/* PRODUCTS GRID */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {displayedProducts.length > 0 ? (
               displayedProducts.map((product) => (
-                <div
+                <Link
+                  to={`/product/${product._id}`}
                   key={product._id}
-                  className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition"
+                  className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition block"
                 >
                   <h3 className="font-semibold text-[#224F34]">
                     {product.name}
                   </h3>
+
                   <p className="text-sm text-gray-500 mt-1">
                     ₦{formatPrice(product.price)}
                   </p>
-                </div>
+                </Link>
               ))
             ) : (
               <p className="text-gray-500 col-span-full text-center">

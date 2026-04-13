@@ -133,7 +133,7 @@ const Hot = () => {
                       addToCart(item._id);
                     }}
                     disabled={cartLoadingId === item._id}
-                    className="bg-green-600 text-white  md:p-3 rounded-full hover:bg-green-700 transition flex items-center justify-center"
+                    className="bg-green-600 text-white p-[13px] md:p-3 rounded-full hover:bg-green-700 transition flex items-center justify-center"
                   >
                     {cartLoadingId === item._id ? (
                       <div className="scale-50 sm:scale-75 md:scale-90">

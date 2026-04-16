@@ -17,7 +17,7 @@ import NotFound from "./page/NotFound";
 import Search from "./page/Search";
 import Admin from "./admin/pages/admin";
 import Staff from "./admin/pages/Staff";
-import UserOrder from "./admin/pages/userOrder";
+import UserOrder from "./admin/pages/UserOrder";
 
 // New Pages
 import Orders from "./page/Order";

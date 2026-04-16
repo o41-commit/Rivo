@@ -37,11 +37,11 @@ const Register = () => {
     setError("");
 
     try {
-      // 🔥 clean payload (no confirmPassword)
       const payload = {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        confirmpassword: formData.confirmPassword,
       };
 
       const respond = await fetch(

@@ -17,6 +17,7 @@ import NotFound from "./page/NotFound";
 import Search from "./page/Search";
 import Admin from "./admin/pages/admin";
 import Staff from "./admin/pages/Staff";
+import UserOrder from "./admin/pages/userOrder";
 
 // New Pages
 import Orders from "./page/Order";
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="success" element={<Success />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="search" element={<Search />} />
+          <Route path="user-order/:id" element={<UserOrder />} />
           <Route path="admin" element={<Admin />} />
           <Route path="staff" element={<Staff />} />
           <Route path="*" element={<NotFound />} />

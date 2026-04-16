@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdCheckCircle, MdLocalShipping } from "react-icons/md";
 import Spinner from "../../componnent/Spinner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Orders = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Orders = () => {
         }
       );
 
-            if (res.status === 401 || res.status === 403 || !token) {
+      if (res.status === 401 || res.status === 403 || !token) {
         localStorage.removeItem("token");
         navigate("/login");
         return;
@@ -110,82 +110,97 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f6fff9] p-4 sm:p-6">
+    <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
 
+        {/* Header */}
         <div className="mb-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-green-900">
+          <h2 className="text-3xl font-bold text-gray-800">
             Orders Overview
           </h2>
-          <p className="text-green-800/70 text-base mt-2">
-            Track and manage all customer orders in one place
+          <p className="text-gray-500 mt-1">
+            Manage customer orders efficiently
           </p>
         </div>
 
         {loading && <Spinner />}
 
-        <div className="flex flex-col gap-5">
+        {/* Orders */}
+        <div className="grid gap-5">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white p-6 sm:p-7 rounded-2xl shadow-sm hover:shadow-lg transition border border-green-50"
+              className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition border"
             >
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+              <div className="flex justify-between items-center mb-4">
 
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-green-900">
-                    Order #{order._id}
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    Order #{order._id.slice(0, 8)}...
                   </h3>
-
-                  <p className="text-sm text-green-800/70 mt-1">
-                    ProductId: {order.items?.[0]?.productId || "No product"}
+                  <p className="text-sm text-gray-500">
+                    {order.UserName || "Unknown User"}
                   </p>
                 </div>
 
-                <div
-                  className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusStyle(
+                <span
+                  className={`px-3 py-1 text-sm rounded-full ${getStatusStyle(
                     order.status
                   )}`}
                 >
                   {order.status}
-                </div>
+                </span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 mt-5 pt-5 border-t border-green-100">
+              {/* Quick Info */}
+              <div className="text-sm text-gray-600 space-y-1">
+                <p>Items: {order.items?.length}</p>
+                <p>Total: ₦{order.totalPrice}</p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap gap-3 mt-5">
+
+                <Link to={`/user-order/${order._id}`}>
+                  <button className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-black text-sm">
+                    View Order
+                  </button>
+                </Link>
 
                 {canConfirm(order) && (
                   <button
                     onClick={() => approveOrder(order._id)}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
                   >
-                    <MdCheckCircle size={18} />
-                    Confirm Order
+                    <MdCheckCircle />
+                    Confirm
                   </button>
                 )}
 
                 {canShip(order) && (
                   <button
                     onClick={() => shipOrder(order._id)}
-                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
                   >
-                    <MdLocalShipping size={18} />
-                    Ship Order
+                    <MdLocalShipping />
+                    Ship
                   </button>
                 )}
 
                 {isCompleted(order) && (
-                  <div className="text-sm text-green-700 font-medium py-2.5">
-                    ✓ Order shipped successfully
-                  </div>
+                  <span className="text-green-600 text-sm font-medium">
+                    ✓ Completed
+                  </span>
                 )}
               </div>
             </div>
           ))}
         </div>
 
+        {/* Empty State */}
         {orders.length === 0 && !loading && (
-          <div className="text-center mt-12 text-green-800/70">
-            <p className="text-lg">No orders available.</p>
+          <div className="text-center mt-12 text-gray-500">
+            No orders available
           </div>
         )}
       </div>

@@ -138,7 +138,7 @@ const Hot = () => {
                     className="bg-green-600 text-white  p-[9px] md:p-3 rounded-full hover:bg-green-700 transition flex items-center justify-center"
                   >
                     {cartLoadingId === item._id ? (
-                      <div className="scale-50 sm:scale-75 md:scale-90">
+                      <div>
                         <Spinner />
                       </div>
                     ) : (

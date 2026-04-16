@@ -30,7 +30,6 @@ const UserOrder = () => {
       }
 
       const data = await res.json();
-      // console.log(data)
       setOrder(data);
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -72,39 +71,40 @@ const UserOrder = () => {
     getOrder();
   }, []);
 
-if (loading) {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <Spinner />
-    </div>
-  );
-}
+  // FULLSCREEN LOADING
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!order) {
     return <div className="text-center p-10">Order not found</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-[100px] p-6">
+    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 py-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
             Order Details
           </h1>
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-sm sm:text-base">
             Manage and track this customer order
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-md p-6 space-y-6">
+        <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6 space-y-6">
 
           {/* Top Section */}
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 break-all">
                 Order #{order._id}
               </h2>
               <p className="text-gray-500 text-sm mt-1">
@@ -113,7 +113,7 @@ if (loading) {
             </div>
 
             <span
-              className={`px-4 py-2 rounded-full text-sm font-medium ${getStatusStyle(
+              className={`self-start sm:self-auto px-4 py-2 rounded-full text-xs sm:text-sm font-medium ${getStatusStyle(
                 order.status
               )}`}
             >
@@ -123,11 +123,11 @@ if (loading) {
 
           {/* Customer Info */}
           <div className="border-t pt-4">
-            <h3 className="text-lg font-semibold mb-3 text-gray-700">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 text-gray-700">
               Customer Info
             </h3>
 
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600">
               <p><strong>Name:</strong> {order.userName}</p>
               <p><strong>Email:</strong> {order.userEmail}</p>
               <p><strong>Phone:</strong> {order.userNum}</p>
@@ -137,7 +137,7 @@ if (loading) {
 
           {/* Items */}
           <div className="border-t pt-4">
-            <h3 className="text-lg font-semibold mb-3 text-gray-700">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 text-gray-700">
               Order Items
             </h3>
 
@@ -145,11 +145,12 @@ if (loading) {
               {order.items?.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center bg-gray-50 p-4 rounded-xl"
+                  className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 bg-gray-50 p-4 rounded-xl"
                 >
-                  <div>
-                    <p className="text-sm text-gray-700">
-                      Product ID: {item.productId}
+                  <div className="text-sm text-gray-700">
+                    <p className="break-all">
+                      <span className="font-medium">Product ID:</span>{" "}
+                      {item.productId}
                     </p>
                     <p className="text-xs text-gray-500">
                       Quantity: {item.quantity}
@@ -161,7 +162,7 @@ if (loading) {
                   </div>
 
                   <Link to={`/product/${item.productId}`}>
-                    <button className="text-blue-600 text-sm hover:underline">
+                    <button className="w-full sm:w-auto text-blue-600 text-sm hover:underline">
                       View
                     </button>
                   </Link>
@@ -171,7 +172,7 @@ if (loading) {
           </div>
 
           {/* Actions */}
-          <div className="border-t pt-4 flex gap-3 flex-wrap">
+          <div className="border-t pt-4 flex flex-col sm:flex-row gap-3">
 
             {order.status === "Pending" && (
               <button
@@ -181,7 +182,7 @@ if (loading) {
                     "Confirmed"
                   )
                 }
-                className="flex items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
               >
                 <MdCheckCircle />
                 Confirm Order
@@ -196,7 +197,7 @@ if (loading) {
                     "Shipped"
                   )
                 }
-                className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
               >
                 <MdLocalShipping />
                 Ship Order
@@ -204,7 +205,7 @@ if (loading) {
             )}
 
             {order.status === "Shipped" && (
-              <span className="text-green-600 font-medium">
+              <span className="text-green-600 font-medium text-sm sm:text-base">
                 ✓ Order completed
               </span>
             )}

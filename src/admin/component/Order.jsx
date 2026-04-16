@@ -125,7 +125,6 @@ const Orders = () => {
 
         {loading && <Spinner />}
 
-        {/* Orders */}
         <div className="grid gap-5">
           {orders.map((order) => (
             <div
@@ -196,7 +195,6 @@ const Orders = () => {
           ))}
         </div>
 
-        {/* Empty State */}
         {orders.length === 0 && !loading && (
           <div className="text-center mt-12 text-gray-500">
             No orders available

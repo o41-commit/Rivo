@@ -79,7 +79,7 @@ const UserOrder = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 mt-8 p-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
@@ -122,8 +122,8 @@ const UserOrder = () => {
             </h3>
 
             <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-600">
-              <p><strong>Name:</strong> {order.UserName}</p>
-              <p><strong>Email:</strong> {order.UserEmail}</p>
+              <p><strong>Name:</strong> {order.userName}</p>
+              <p><strong>Email:</strong> {order.userEmail}</p>
               <p><strong>Phone:</strong> {order.userNum}</p>
               <p><strong>Address:</strong> {order.userAddress}</p>
             </div>

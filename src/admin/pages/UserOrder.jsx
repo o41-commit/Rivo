@@ -30,6 +30,7 @@ const UserOrder = () => {
       }
 
       const data = await res.json();
+      console.log(data)
       setOrder(data);
     } catch (error) {
       console.error("Error fetching order:", error);

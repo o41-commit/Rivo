@@ -30,7 +30,7 @@ const UserOrder = () => {
       }
 
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       setOrder(data);
     } catch (error) {
       console.error("Error fetching order:", error);
@@ -72,14 +72,20 @@ const UserOrder = () => {
     getOrder();
   }, []);
 
-  if (loading) return <Spinner />;
+if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <Spinner />
+    </div>
+  );
+}
 
   if (!order) {
     return <div className="text-center p-10">Order not found</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-8 p-6">
+    <div className="min-h-screen bg-gray-50 mt-[100px] p-6">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}

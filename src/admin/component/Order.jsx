@@ -152,13 +152,11 @@ const Orders = () => {
                 </span>
               </div>
 
-              {/* Quick Info */}
               <div className="text-sm text-gray-600 space-y-1">
                 <p>Items: {order.items?.length}</p>
                 <p>Total: ₦{order.totalPrice}</p>
               </div>
 
-              {/* Actions */}
               <div className="flex flex-wrap gap-3 mt-5">
 
                 <Link to={`/user-order/${order._id}`}>
@@ -166,7 +164,7 @@ const Orders = () => {
                     View Order
                   </button>
                 </Link>
-                
+
 
                 {canConfirm(order) && (
                   <button

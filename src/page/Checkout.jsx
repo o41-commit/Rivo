@@ -49,7 +49,7 @@ const Checkout = () => {
         return;
       }
 
-      if (!data.address || data.address === null) {
+      if (!data.address || data.address.length === 0) {
         setMessage("No address registered");
         navigate("/settings");
         return;

@@ -145,7 +145,7 @@ const ProductDetails = () => {
             ₦{formatPrice(product.price)}
           </p>
 
-          <p className="text-gray-600 mt-4">
+          <p className="text-gray-600 mt-4 whitespace-pre-line">
             {product.description}
           </p>
 

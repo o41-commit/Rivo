@@ -11,6 +11,12 @@ const Hot = () => {
 
   const token = localStorage.getItem("token");
 
+  // ================= FORMAT PRICE =================
+  const formatPrice = (price) => {
+    if (!price) return "0";
+    return new Intl.NumberFormat("en-NG").format(price);
+  };
+
   const userName = (name) => {
     const limit = 15;
     return name.length > limit ? name.slice(0, limit) + "..." : name;
@@ -82,12 +88,17 @@ const Hot = () => {
     getItems();
   }, []);
 
-  // ================= PAGE LOADER (RESPONSIVE FIXED) =================
+  // ================= LOADING =================
   if (pageLoading) {
     return (
-      <div className="flex justify-center items-center h-40">
-        <div className="scale-75 sm:scale-90 md:scale-100">
-          <Spinner />
+      <div className="flex justify-center items-center min-h-[60vh] px-4">
+        <div className="flex flex-col items-center gap-3">
+          <div className="scale-90 sm:scale-100 md:scale-110">
+            <Spinner />
+          </div>
+          <p className="text-sm text-gray-500 animate-pulse">
+            Loading products...
+          </p>
         </div>
       </div>
     );
@@ -99,6 +110,7 @@ const Hot = () => {
         items.map((item) => (
           <Link to={`/product/${item._id}`} key={item._id}>
             <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+
               {/* IMAGE */}
               <div className="relative">
                 <img
@@ -126,7 +138,7 @@ const Hot = () => {
                 {/* PRICE + BUTTON */}
                 <div className="flex items-center justify-between mt-3">
                   <p className="text-lg md:text-xl font-bold text-green-700">
-                    ₦{item.price}
+                    ₦{formatPrice(item.price)}
                   </p>
 
                   <button
@@ -135,18 +147,25 @@ const Hot = () => {
                       addToCart(item._id);
                     }}
                     disabled={cartLoadingId === item._id}
-                    className="bg-green-600 text-white  p-[9px] md:p-3 rounded-full hover:bg-green-700 transition flex items-center justify-center"
+                    className="bg-green-600 text-white 
+                               w-9 h-9 md:w-10 md:h-10 
+                               rounded-full 
+                               hover:bg-green-700 
+                               transition 
+                               flex items-center justify-center
+                               active:scale-95"
                   >
                     {cartLoadingId === item._id ? (
-                      <div>
+                      <div className="scale-75 md:scale-90">
                         <Spinner />
                       </div>
                     ) : (
-                      <FaPlus size={12} />
+                      <FaPlus className="text-xs md:text-sm" />
                     )}
                   </button>
                 </div>
               </div>
+
             </div>
           </Link>
         ))

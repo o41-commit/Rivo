@@ -41,14 +41,15 @@ const Checkout = () => {
       }
 
       const data = await res.json();
+      console.log(data)
 
-      if (!data.num) {
+      if (!data.num || data.num === null) {
         setMessage("No number registered");
         navigate("/settings");
         return;
       }
 
-      if (!data.address) {
+      if (!data.address || data.address === null) {
         setMessage("No address registered");
         navigate("/settings");
         return;

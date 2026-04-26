@@ -10,17 +10,15 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [actionLoadingId, setActionLoadingId] = useState(null);
 
-  // ================= FORMAT PRICE =================
   const formatPrice = (price) => Number(price).toLocaleString();
 
-  // ================= FETCH CART =================
   const getCart = async () => {
     const token = localStorage.getItem("token");
-    let guest_id = localStorage.getItem("guest_id");
+    let guestId = localStorage.getItem("guest_id");
 
-    if (!token && !guest_id) {
-      guest_id = crypto.randomUUID();
-      localStorage.setItem("guest_id", guest_id);
+    if (!token && !guestId) {
+      guestId = crypto.randomUUID();
+      localStorage.setItem("guest_id", guestId);
     }
 
     try {
@@ -28,7 +26,7 @@ const Cart = () => {
 
       const url = token
         ? "https://rivo-ecommerce-db.onrender.com/cart/all"
-        : `https://rivo-ecommerce-db.onrender.com/cart/all/guest/${guest_id}`;
+        : `https://rivo-ecommerce-db.onrender.com/cart/all/guest/${guestId}`;
 
       const res = await fetch(url, {
         headers: {
@@ -40,6 +38,7 @@ const Cart = () => {
       if (!res.ok) throw new Error(`server responded with ${res.status}`);
 
       const data = await res.json();
+      console.log(data, "cart data");
       setCartItems(data);
     } catch (error) {
       console.error(error, "error fetching cart");
@@ -74,7 +73,6 @@ const Cart = () => {
     }
   };
 
-  // ================= DELETE =================
   const deleteItem = async (id) => {
     try {
       setActionLoadingId(id);

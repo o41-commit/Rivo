@@ -33,7 +33,7 @@ const NavBar = () => {
           {/* ACTIONS */}
           <div className="flex items-center gap-4">
             <Link to="/search">
-              <IoSearchOutline className="text-xl sm:text-2xl md:text-3xl" />
+              <IoSearchOutline className="text-xl sm:text-3xl md:text-4xl" />
             </Link>
 
             {/* CART */}

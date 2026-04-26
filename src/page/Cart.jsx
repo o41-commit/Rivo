@@ -38,7 +38,7 @@ const Cart = () => {
       if (!res.ok) throw new Error(`server responded with ${res.status}`);
 
       const data = await res.json();
-      console.log(data, "cart data");
+      // console.log(data, "cart data");
       setCartItems(data);
     } catch (error) {
       console.error(error, "error fetching cart");

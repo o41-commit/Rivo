@@ -38,7 +38,7 @@ const NavBar = () => {
 
             {/* CART */}
             <Link to="/cart" className="relative">
-              <IoCartOutline className="text-xl sm:text-2xl md:text-3xl" />
+              <IoCartOutline className="text-xl sm:text-3xl md:text-4xl" />
 
               {/* OPTIONAL: Cart Count Badge */}
               <div className="absolute -top-0.5 w-3 h-3 rounded-full -right-1 bg-green-900"></div>

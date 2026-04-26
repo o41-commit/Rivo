@@ -31,7 +31,7 @@ const NavBar = () => {
           </h2>
 
           {/* ACTIONS */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <Link to="/search">
               <IoSearchOutline className="text-xl sm:text-3xl md:text-4xl" />
             </Link>

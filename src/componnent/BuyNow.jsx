@@ -1,22 +1,19 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 
 const BuyNow = () => {
   return (
     <div className="px-5 md:px-8 lg:px-12 py-8 md:py-12">
-      
       <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-        
         {/* CARD 1 */}
         <div className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-          
           <h2 className="uppercase text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Peace of Mind
           </h2>
 
           <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-8 leading-relaxed">
-            A one-stop platform for all your fashion needs, hassle-free.
-            Buy with a peace of mind.
+            A one-stop platform for all your fashion needs, hassle-free. Buy
+            with a peace of mind.
           </p>
 
           <Link
@@ -29,7 +26,6 @@ const BuyNow = () => {
 
         {/* CARD 2 */}
         <div className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
-          
           <h2 className="uppercase text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Buy 2 Get 1 Free
           </h2>
@@ -45,10 +41,9 @@ const BuyNow = () => {
             Buy Now
           </Link>
         </div>
-
       </div>
     </div>
   );
 };
 
-export default BuyNow;
+export default memo(BuyNow);

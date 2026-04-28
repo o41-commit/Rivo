@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../componnent/Spinner";
 import {
@@ -14,19 +14,34 @@ const Profile = () => {
   const [user, setUser] = useState({ name: "Guest", email: "", img: null });
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
+  const token = useMemo(() => localStorage.getItem("token"), []);
   const [logOut, setLogout] = useState(token ? "Logout" : "Login");
 
-  const menuItems = [
-    { title: "My Orders", icon: <IoBagHandleOutline size={22} />, path: "/orders" },
-    { title: "Wishlist", icon: <IoHeartOutline size={22} />, path: "/wishlist" },
-    { title: "Settings", icon: <IoSettingsOutline size={22} />, path: "/settings" },
-  ];
+  const menuItems = useMemo(
+    () => [
+      {
+        title: "My Orders",
+        icon: <IoBagHandleOutline size={22} />,
+        path: "/orders",
+      },
+      {
+        title: "Wishlist",
+        icon: <IoHeartOutline size={22} />,
+        path: "/wishlist",
+      },
+      {
+        title: "Settings",
+        icon: <IoSettingsOutline size={22} />,
+        path: "/settings",
+      },
+    ],
+    [],
+  );
 
-  const clearToken = () => {
+  const clearToken = useCallback(() => {
     localStorage.removeItem("token");
     setLogout("Login");
-  };
+  }, []);
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -46,7 +61,7 @@ const Profile = () => {
               "Content-Type": "application/json",
               authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
 
         const data = await res.json();
@@ -62,7 +77,9 @@ const Profile = () => {
           imageUrl = data.image.startsWith("http")
             ? data.image
             : `https://rivo-ecommerce-db.onrender.com${
-                data.image.startsWith("/") ? data.image : `/uploads/${data.image}`
+                data.image.startsWith("/")
+                  ? data.image
+                  : `/uploads/${data.image}`
               }`;
         }
 
@@ -83,8 +100,7 @@ const Profile = () => {
     fetchInfo();
   }, [token]);
 
-
-  //  LOADING UI 
+  //  LOADING UI
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -103,12 +119,17 @@ const Profile = () => {
               src={Array.isArray(user.img) ? user.img[0] : user.img}
               alt={`Profile picture of ${user.name}`}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 e.target.style.display = "none";
               }}
             />
           ) : (
-            <IoPersonCircleOutline size={32} className="text-gray-500 md:text-4xl lg:text-5xl" />
+            <IoPersonCircleOutline
+              size={32}
+              className="text-gray-500 md:text-4xl lg:text-5xl"
+            />
           )}
         </div>
 
@@ -125,7 +146,10 @@ const Profile = () => {
       <div className="grid grid-cols-3 gap-3 mt-6 md:grid-cols-3 lg:grid-cols-4">
         <Link to="/orders">
           <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl flex flex-col items-center shadow-sm hover:shadow-md transition">
-            <IoBagHandleOutline size={24} className="text-green-900 md:text-2xl lg:text-3xl" />
+            <IoBagHandleOutline
+              size={24}
+              className="text-green-900 md:text-2xl lg:text-3xl"
+            />
             <span className="text-xs md:text-sm lg:text-base mt-2 font-medium text-green-900">
               Orders
             </span>
@@ -134,7 +158,10 @@ const Profile = () => {
 
         <Link to="/wishlist">
           <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl flex flex-col items-center shadow-sm hover:shadow-md transition">
-            <IoHeartOutline size={24} className="text-green-900 md:text-2xl lg:text-3xl" />
+            <IoHeartOutline
+              size={24}
+              className="text-green-900 md:text-2xl lg:text-3xl"
+            />
             <span className="text-xs md:text-sm lg:text-base mt-2 font-medium text-green-900">
               Wishlist
             </span>
@@ -143,7 +170,10 @@ const Profile = () => {
 
         <Link to="/settings">
           <div className="bg-white p-4 md:p-5 lg:p-6 rounded-xl flex flex-col items-center shadow-sm hover:shadow-md transition">
-            <IoSettingsOutline size={24} className="text-green-900 md:text-2xl lg:text-3xl" />
+            <IoSettingsOutline
+              size={24}
+              className="text-green-900 md:text-2xl lg:text-3xl"
+            />
             <span className="text-xs md:text-sm lg:text-base mt-2 font-medium text-green-900">
               Settings
             </span>
@@ -159,7 +189,10 @@ const Profile = () => {
                 {item.icon}
                 <span className="font-medium">{item.title}</span>
               </div>
-              <IoChevronForward size={18} className="text-gray-400 md:text-lg" />
+              <IoChevronForward
+                size={18}
+                className="text-gray-400 md:text-lg"
+              />
             </div>
           </Link>
         ))}
@@ -180,4 +213,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default memo(Profile);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { IoStar } from "react-icons/io5";
 import { motion } from "framer-motion";
@@ -15,11 +15,27 @@ const ProductDetails = () => {
   const [cartLoadingId, setCartLoadingId] = useState(null);
   const [guestId, setGuestId] = useState(null);
 
-  const token = localStorage.getItem("token");
+  const token = useMemo(() => localStorage.getItem("token"), []);
 
-  const formatPrice = (price) => {
+  const formatPrice = useCallback((price) => {
     return Number(price).toLocaleString();
-  };
+  }, []);
+
+  const sizes = useMemo(
+    () =>
+      Array.isArray(product?.sizes)
+        ? product.sizes.join(", ")
+        : product?.sizes || "N/A",
+    [product?.sizes],
+  );
+
+  const colors = useMemo(
+    () =>
+      Array.isArray(product?.colors)
+        ? product.colors.join(", ")
+        : product?.colors || "N/A",
+    [product?.colors],
+  );
 
   const fetchGuestId = useCallback(async () => {
     if (!token) {
@@ -28,7 +44,7 @@ const ProductDetails = () => {
         if (storedGuestId) setGuestId(storedGuestId);
         else {
           const res = await fetch(
-            "https://rivo-ecommerce-db.onrender.com/cart/guest/new"
+            "https://rivo-ecommerce-db.onrender.com/cart/guest/new",
           );
           const data = await res.json();
           localStorage.setItem("guest_id", data.guestId);
@@ -44,7 +60,7 @@ const ProductDetails = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `https://rivo-ecommerce-db.onrender.com/items/${id}`
+        `https://rivo-ecommerce-db.onrender.com/items/${id}`,
       );
 
       if (!res.ok) throw new Error("Product not found");
@@ -81,7 +97,7 @@ const ProductDetails = () => {
             quantity,
             guestId: token ? null : guestId,
           }),
-        }
+        },
       );
 
       const data = await res.json();
@@ -109,18 +125,9 @@ const ProductDetails = () => {
     return <div className="text-center p-6">Product not found</div>;
   }
 
-  const sizes = Array.isArray(product.sizes)
-    ? product.sizes.join(", ")
-    : product.sizes || "N/A";
-
-  const colors = Array.isArray(product.colors)
-    ? product.colors.join(", ")
-    : product.colors || "N/A";
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6fff9] to-white pt-[100px] pb-[80px] px-4 md:px-8 lg:px-16">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-
         {/* IMAGE */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -130,16 +137,18 @@ const ProductDetails = () => {
           <img
             src={product.images?.[0] || product.image}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="h-72 md:h-96 object-contain"
           />
         </motion.div>
 
         {/* DETAILS */}
-        <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}>
-
-          <h1 className="text-3xl font-bold text-[#1a3d2f]">
-            {product.name}
-          </h1>
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <h1 className="text-3xl font-bold text-[#1a3d2f]">{product.name}</h1>
 
           <p className="text-2xl text-green-700 font-semibold mt-2">
             ₦{formatPrice(product.price)}
@@ -151,13 +160,17 @@ const ProductDetails = () => {
 
           {/* SIZE DISPLAY */}
           <div className="mt-4">
-            <span className="font-semibold text-gray-800">Available Sizes: </span>
-            <span className="text-gray-600">{product.size}</span>
+            <span className="font-semibold text-gray-800">
+              Available Sizes:{" "}
+            </span>
+            <span className="text-gray-600">{sizes}</span>
           </div>
 
           {/* COLOR DISPLAY */}
           <div className="mt-2">
-            <span className="font-semibold text-gray-800">Available Colors: </span>
+            <span className="font-semibold text-gray-800">
+              Available Colors:{" "}
+            </span>
             <span className="text-gray-600">{colors}</span>
           </div>
 
@@ -165,23 +178,20 @@ const ProductDetails = () => {
           <div className="flex items-center gap-4 mt-6">
             <span>Quantity:</span>
             <div className="flex bg-gray-100 rounded-full px-4 py-2">
-              <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+              <button onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
+                -
+              </button>
               <span className="px-4">{quantity}</span>
-              <button onClick={() => setQuantity(q => q + 1)}>+</button>
+              <button onClick={() => setQuantity((q) => q + 1)}>+</button>
             </div>
           </div>
 
           {/* BUTTON */}
           <button
             onClick={() => addToCart(product._id)}
-            disabled={
-              cartLoadingId === product._id ||
-              (!token && !guestId)
-            }
+            disabled={cartLoadingId === product._id || (!token && !guestId)}
             className={`mt-8 w-full py-4 rounded-xl text-white font-semibold flex justify-center items-center gap-2 ${
-              cartLoadingId === product._id
-                ? "bg-gray-400"
-                : "bg-green-900"
+              cartLoadingId === product._id ? "bg-gray-400" : "bg-green-900"
             }`}
           >
             {cartLoadingId === product._id ? (
@@ -192,7 +202,6 @@ const ProductDetails = () => {
               "Add to Cart"
             )}
           </button>
-
         </motion.div>
       </div>
     </div>

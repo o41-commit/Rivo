@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import NavBar from "./NavBar";
 import Fotter from "./Fotter";
 import { Outlet } from "react-router-dom";
 
-const mainLayout = () => {
+const MainLayout = () => {
   return (
     <div>
       <NavBar />
@@ -13,4 +13,4 @@ const mainLayout = () => {
   );
 };
 
-export default mainLayout;
+export default memo(MainLayout);

@@ -39,15 +39,18 @@ const EditProfile = () => {
         formDataToSend.append("image", profilePicture);
       }
 
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/profile/update", {
-        method: "PATCH",
-        headers: {
-          authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://rivo-ecommerce-db.onrender.com/profile/update",
+        {
+          method: "PATCH",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+          body: formDataToSend,
         },
-        body: formDataToSend,
-      });
+      );
 
-            if(res.status === 401 || res.status === 403) {
+      if (res.status === 401 || res.status === 403) {
         localStorage.removeItem("token");
         navigate("/login");
         return;
@@ -69,13 +72,16 @@ const EditProfile = () => {
       }
 
       try {
-        const res = await fetch("https://rivo-ecommerce-db.onrender.com/profile/info", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
+        const res = await fetch(
+          "https://rivo-ecommerce-db.onrender.com/profile/info",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         if (!res.ok) {
           navigate("/login");
@@ -130,12 +136,16 @@ const EditProfile = () => {
                 src={preview}
                 alt="profile"
                 className="w-24 h-24 rounded-full object-cover border"
+                loading="lazy"
+                decoding="async"
               />
             ) : img ? (
               <img
                 src={img}
                 alt="profile"
                 className="w-34 h-24 rounded-full object-cover border"
+                loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   console.error("Image failed to load:", e.target.src);
                   e.target.style.display = "none";

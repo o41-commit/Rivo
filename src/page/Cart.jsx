@@ -138,7 +138,7 @@ const Cart = () => {
               src={item.image}
               alt={item.name}
               className="w-full md:w-24 h-24 rounded-lg object-cover"
-            />
+             loading="lazy" decoding="async"/>
 
             <div className="flex-1 flex flex-col md:flex-row md:justify-between md:items-center w-full">
               <div className="flex-1">

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Spinner = () => {
   return (
     <div className="flex items-center justify-center space-x-2  py-4">
@@ -12,4 +11,4 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+export default React.memo(Spinner);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { BiSolidQuoteLeft } from "react-icons/bi";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "swiper/css";
@@ -38,7 +38,6 @@ const Testimonials = () => {
 
   return (
     <div className="px-5 md:px-8 lg:px-12 py-10 md:py-14">
-      
       <h2 className="text-center mb-10 text-2xl sm:text-3xl md:text-4xl font-bold text-[#224F34]">
         Feedback Corner
       </h2>
@@ -117,4 +116,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default memo(Testimonials);

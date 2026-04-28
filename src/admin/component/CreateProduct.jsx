@@ -212,7 +212,7 @@ const CreateProduct = () => {
                       src={url}
                       alt="preview"
                       className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                    />
+                     loading="lazy" decoding="async"/>
 
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs transition">
                       Preview

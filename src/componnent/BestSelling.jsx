@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import Sell1 from "../images/Sell1.png";
 import Sell2 from "../images/Sell2.png";
@@ -20,7 +20,6 @@ const products = [
 const BestSelling = () => {
   return (
     <div className="px-4 pt-[50px] pb-6">
-      
       {/* HEADER */}
       <div className="text-center text-[#224F34] mb-6">
         <h1 className="text-3xl font-bold mb-2">Best Selling</h1>
@@ -42,21 +41,18 @@ const BestSelling = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product.id}>
-            
             <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition duration-300 group">
-              
               {/* IMAGE */}
               <div className="bg-[#C2EFD4] p-4 flex justify-center">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="h-40 object-contain group-hover:scale-105 transition duration-300"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
 
               {/* CONTENT */}
               <div className="p-4">
-                
                 <h2 className="font-semibold text-[#224F34] text-lg">
                   {product.name}
                 </h2>
@@ -74,7 +70,6 @@ const BestSelling = () => {
                 </Link>
               </div>
             </div>
-
           </SwiperSlide>
         ))}
       </Swiper>
@@ -92,4 +87,4 @@ const BestSelling = () => {
   );
 };
 
-export default BestSelling;
+export default memo(BestSelling);

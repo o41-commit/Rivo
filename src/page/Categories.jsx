@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useCallback } from "react";
 import New from "../componnent/New";
 import Hot from "../componnent/Hot";
 import Mens from "../componnent/Mens";
@@ -23,16 +23,15 @@ const Categories = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollTop = () => {
+  const scrollTop = useCallback(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  };
+  }, []);
 
   return (
     <div className="mt-[70px] bg-[#f7faf7] min-h-screen pb-20">
-
       {/* PAGE HEADER */}
       <div className="px-4 pt-6">
         <h1 className="text-4xl font-bold text-green-900">Categories</h1>
@@ -117,9 +116,8 @@ const Categories = () => {
           <FaArrowUp />
         </button>
       )}
-
     </div>
   );
 };
 
-export default Categories;
+export default memo(Categories);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import Hero1 from "../images/Hero1.png";
 import Hero2 from "../images/Hero2.png";
@@ -29,7 +29,7 @@ const Hero = () => {
                   src={Hero4}
                   alt="Hero"
                   className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
               <div className="md:max-w-[50%]">
                 <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
@@ -55,7 +55,7 @@ const Hero = () => {
                   src={Hero2}
                   alt="Hero"
                   className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
               <div className="md:max-w-[55%]">
                 <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
@@ -81,7 +81,7 @@ const Hero = () => {
                   src={Hero3}
                   alt="Hero"
                   className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
               <div className="md:max-w-[50%]">
                 <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
@@ -107,7 +107,7 @@ const Hero = () => {
                   src={Hero1}
                   alt="Hero"
                   className="w-full max-w-[500px] h-[400px] md:h-[450px] object-cover  shadow-lg"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
               <div className="md:max-w-[50%]">
                 <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
@@ -134,7 +134,7 @@ const Hero = () => {
                   src={Hero5}
                   alt="Hero"
                   className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
+                 loading="lazy" decoding="async"/>
               </div>
               <div className="md:max-w-[50%]">
                 <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
@@ -159,4 +159,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

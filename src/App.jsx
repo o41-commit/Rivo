@@ -62,8 +62,10 @@ const App = () => {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center text-green-700">Loading...</div>
+        <div className="min-h-screen flex flex-col items-center justify-center">
+                    <h1 className="text-center text-green-900 font-bold text-5xl pb-2 ">Rivo</h1>
+          <p className="text-center text-green-700">Loading...</p>
+
         </div>
       }
     >

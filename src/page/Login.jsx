@@ -26,7 +26,8 @@ const Login = () => {
 
 
   // GOOGLE LOGIN
-  const googleLogin = async () => {
+  const googleLogin = async (e) => {
+    e.preventDefault();
 
     try {
 
@@ -39,6 +40,7 @@ const Login = () => {
 
       const firebaseToken = await user.getIdToken();
 
+      console.log("Firebase token:", firebaseToken);
       // send token to backend
       const res = await fetch(
         "https://rivo-ecommerce-db.onrender.com/google",
@@ -54,6 +56,7 @@ const Login = () => {
       );
 
       const data = await res.json();
+      console.log(data);
 
       if (!res.ok) {
         setError(data.message || "Google login failed");

@@ -31,9 +31,7 @@ const Login = () => {
 
       const firebaseToken = await user.getIdToken();
 
-      // console.log("Firebase token:", firebaseToken);
-      // send token to backend
-      console.log("ABOUT TO CALL BACKEND");
+
       const res = await fetch(
         "https://rivo-ecommerce-db.onrender.com/auth/google",
         {
@@ -47,10 +45,8 @@ const Login = () => {
         },
       );
 
-      console.log("RESPONSE RECEIVED:", res);
 
       const data = await res.json();
-      console.log(data);
 
       if (!res.ok) {
         setError(data.message || "Google login failed");

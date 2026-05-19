@@ -44,7 +44,7 @@ const Login = () => {
       // send token to backend
         console.log("ABOUT TO CALL BACKEND");
       const res = await fetch(
-        "https://rivo-ecommerce-db.onrender.com/google",
+        "https://rivo-ecommerce-db.onrender.com/auth/google",
         {
           method: "POST",
           headers: {
@@ -116,7 +116,7 @@ const Login = () => {
     try {
 
       const res = await fetch(
-        "https://rivo-ecommerce-db.onrender.com/login",
+        "https://rivo-ecommerce-db.onrender.com/auth/login",
         {
           method: "POST",
           headers: {

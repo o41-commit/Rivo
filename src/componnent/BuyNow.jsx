@@ -1,12 +1,27 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const BuyNow = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 120,
+    });
+  }, []);
+
   return (
-    <div className="px-5 md:px-8 lg:px-12 py-8 md:py-12">
+    <div data-aos="fade-up" className="px-5 md:px-8 lg:px-12 py-8 md:py-12">
       <div className="flex flex-col md:flex-row gap-6 md:gap-8">
         {/* CARD 1 */}
-        <div className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+        >
           <h2 className="uppercase text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Peace of Mind
           </h2>
@@ -25,7 +40,11 @@ const BuyNow = () => {
         </div>
 
         {/* CARD 2 */}
-        <div className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="220"
+          className="text-center bg-black w-full text-white px-6 md:px-8 py-8 md:py-10 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+        >
           <h2 className="uppercase text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Buy 2 Get 1 Free
           </h2>

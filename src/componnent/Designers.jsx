@@ -1,11 +1,22 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import Designer1 from "../images/Designer1.png";
 import Designer2 from "../images/Designer2.png";
 import Designer3 from "../images/Designer3.png";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Designers = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 120,
+    });
+  }, []);
+
   return (
-    <div className="px-5 md:px-8 lg:px-12 py-10 md:py-14">
+    <div data-aos="fade-up" className="px-5 md:px-8 lg:px-12 py-10 md:py-14">
       <div className="text-center text-[#224F34] max-w-2xl md:max-w-3xl mx-auto mb-10 md:mb-14">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
           Designer Clothes For You
@@ -18,12 +29,18 @@ const Designers = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-        <div className="text-center group">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="80"
+          className="text-center group"
+        >
           <img
             className="rounded-xl w-full h-[300px] md:h-[350px] object-cover shadow-md group-hover:scale-105 transition-transform duration-300"
             src={Designer3}
             alt="Accessories"
-           loading="lazy" decoding="async"/>
+            loading="lazy"
+            decoding="async"
+          />
 
           <h2 className="font-semibold mt-5 text-lg sm:text-xl md:text-2xl text-[#224F34]">
             Accessories
@@ -35,12 +52,18 @@ const Designers = () => {
           </p>
         </div>
 
-        <div className="text-center group">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="160"
+          className="text-center group"
+        >
           <img
             className="rounded-xl w-full h-[300px] md:h-[350px] object-cover shadow-md group-hover:scale-105 transition-transform duration-300"
             src={Designer2}
             alt="Dresses"
-           loading="lazy" decoding="async"/>
+            loading="lazy"
+            decoding="async"
+          />
 
           <h2 className="font-semibold mt-5 text-lg sm:text-xl md:text-2xl text-[#224F34]">
             Dresses
@@ -52,12 +75,18 @@ const Designers = () => {
           </p>
         </div>
 
-        <div className="text-center group">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="240"
+          className="text-center group"
+        >
           <img
             className="rounded-xl w-full h-[300px] md:h-[350px] object-cover shadow-md group-hover:scale-105 transition-transform duration-300"
             src={Designer1}
             alt="Outerwear"
-           loading="lazy" decoding="async"/>
+            loading="lazy"
+            decoding="async"
+          />
 
           <h2 className="font-semibold mt-5 text-lg sm:text-xl md:text-2xl text-[#224F34]">
             Outerwear

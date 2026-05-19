@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { FaStar, FaPlus } from "react-icons/fa";
 import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
@@ -59,6 +61,19 @@ const CategoryProducts = ({ category }) => {
   }, [token]);
 
   useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 120,
+    });
+  }, []);
+
+  useEffect(() => {
+    AOS.refresh();
+  }, [items]);
+
+  useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
@@ -114,12 +129,16 @@ const CategoryProducts = ({ category }) => {
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {items.length > 0 ? (
-        items.map((item) => {
+        items.map((item, index) => {
           const isLoading = cartLoadingId === item._id;
 
           return (
             <Link to={`/product/${item._id}`} key={item._id}>
-              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+              <div
+                data-aos="zoom-in"
+                data-aos-delay={index * 80}
+                className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+              >
                 <div className="relative">
                   <img
                     src={item.images?.[0]}

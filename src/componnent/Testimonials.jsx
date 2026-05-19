@@ -1,9 +1,11 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import { BiSolidQuoteLeft } from "react-icons/bi";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const testimonials = [
   {
@@ -36,8 +38,12 @@ const Testimonials = () => {
   const [swiperRef, setSwiperRef] = useState(null);
   const [activeBtn, setActiveBtn] = useState("");
 
+  useEffect(() => {
+    AOS.init({ duration: 900, once: true, easing: "ease-out-cubic", offset: 120 });
+  }, []);
+
   return (
-    <div className="px-5 md:px-8 lg:px-12 py-10 md:py-14">
+    <div data-aos="fade-up" className="px-5 md:px-8 lg:px-12 py-10 md:py-14">
       <h2 className="text-center mb-10 text-2xl sm:text-3xl md:text-4xl font-bold text-[#224F34]">
         Feedback Corner
       </h2>
@@ -61,6 +67,8 @@ const Testimonials = () => {
           <SwiperSlide key={index}>
             {({ isActive }) => (
               <div
+                data-aos="fade-up"
+                data-aos-delay={100 + index * 80}
                 className={`h-full flex flex-col p-5 md:p-6 rounded-xl shadow-md transition-all duration-300 ${
                   isActive
                     ? "bg-[#C2EFD4] text-[#224F34]"

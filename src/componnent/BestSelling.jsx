@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sell1 from "../images/Sell1.png";
 import Sell2 from "../images/Sell2.png";
@@ -8,6 +8,8 @@ import Sell5 from "../images/Sell5.png";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const products = [
   { id: 1, name: "Plain Shirt", price: 49, image: Sell1 },
@@ -18,8 +20,17 @@ const products = [
 ];
 
 const BestSelling = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 120,
+    });
+  }, []);
+
   return (
-    <div className="px-4 pt-[50px] pb-6">
+    <div data-aos="fade-up" className="px-4 pt-[50px] pb-6">
       {/* HEADER */}
       <div className="text-center text-[#224F34] mb-6">
         <h1 className="text-3xl font-bold mb-2">Best Selling</h1>
@@ -41,14 +52,20 @@ const BestSelling = () => {
       >
         {products.map((product) => (
           <SwiperSlide key={product.id}>
-            <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition duration-300 group">
+            <div
+              data-aos="fade-up"
+              data-aos-delay={product.id * 80}
+              className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition duration-300 group"
+            >
               {/* IMAGE */}
               <div className="bg-[#C2EFD4] p-4 flex justify-center">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="h-40 object-contain group-hover:scale-105 transition duration-300"
-                 loading="lazy" decoding="async"/>
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
 
               {/* CONTENT */}

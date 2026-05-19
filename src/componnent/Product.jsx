@@ -1,9 +1,23 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import Hot from "./Hot";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Product = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: true,
+      easing: "ease-out-cubic",
+      offset: 120,
+    });
+  }, []);
+
   return (
-    <div className="px-5 md:px-8 lg:px-12 py-8 md:py-12 bg-gradient-to-b from-white to-green-50">
+    <div
+      data-aos="fade-up"
+      className="px-5 md:px-8 lg:px-12 py-8 md:py-12 bg-gradient-to-b from-white to-green-50"
+    >
       {/* HEADER SECTION */}
       <div className="text-center max-w-2xl md:max-w-3xl mx-auto mb-12 md:mb-16">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#224F34] leading-tight">

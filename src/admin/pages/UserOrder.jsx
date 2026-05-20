@@ -6,10 +6,13 @@ import { MdCheckCircle, MdLocalShipping } from "react-icons/md";
 const UserOrder = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [itemsVisibleCount, setItemsVisibleCount] = useState(3);
 
   const navigate = useNavigate();
   const { id } = useParams();
   const token = localStorage.getItem("token");
+
+  const priceFormatter = new Intl.NumberFormat("en-NG");
 
   const getOrder = async () => {
     try {
@@ -20,7 +23,7 @@ const UserOrder = () => {
             "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (res.status === 401 || res.status === 403 || !token) {
@@ -87,7 +90,6 @@ const UserOrder = () => {
   return (
     <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 py-6">
       <div className="max-w-5xl mx-auto">
-
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
@@ -100,7 +102,6 @@ const UserOrder = () => {
 
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6 space-y-6">
-
           {/* Top Section */}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div>
@@ -108,13 +109,13 @@ const UserOrder = () => {
                 Order #{order._id}
               </h2>
               <p className="text-gray-500 text-sm mt-1">
-                Total: ₦{order.totalPrice}
+                Total: ₦{priceFormatter.format(order.totalPrice)}
               </p>
             </div>
 
             <span
               className={`self-start sm:self-auto px-4 py-2 rounded-full text-xs sm:text-sm font-medium ${getStatusStyle(
-                order.status
+                order.status,
               )}`}
             >
               {order.status}
@@ -128,10 +129,18 @@ const UserOrder = () => {
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-600">
-              <p><strong>Name:</strong> {order.userName}</p>
-              <p><strong>Email:</strong> {order.userEmail}</p>
-              <p><strong>Phone:</strong> {order.userNum}</p>
-              <p><strong>Address:</strong> {order.userAddress}</p>
+              <p>
+                <strong>Name:</strong> {order.userName}
+              </p>
+              <p>
+                <strong>Email:</strong> {order.userEmail}
+              </p>
+              <p>
+                <strong>Phone:</strong> {order.userNum}
+              </p>
+              <p>
+                <strong>Address:</strong> {order.userAddress}
+              </p>
             </div>
           </div>
 
@@ -142,7 +151,7 @@ const UserOrder = () => {
             </h3>
 
             <div className="space-y-3">
-              {order.items?.map((item, index) => (
+              {order.items?.slice(0, itemsVisibleCount).map((item, index) => (
                 <div
                   key={index}
                   className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 bg-gray-50 p-4 rounded-xl"
@@ -158,7 +167,7 @@ const UserOrder = () => {
                   </div>
 
                   <div className="text-sm font-semibold text-gray-700">
-                    ₦{item.totalPrice}
+                    ₦{priceFormatter.format(item.totalPrice)}
                   </div>
 
                   <Link to={`/product/${item.productId}`}>
@@ -168,18 +177,28 @@ const UserOrder = () => {
                   </Link>
                 </div>
               ))}
+
+              {order.items && order.items.length > itemsVisibleCount && (
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setItemsVisibleCount((c) => c + 3)}
+                    className="px-4 py-2 bg-emerald-900 text-white rounded-lg hover:bg-emerald-800"
+                  >
+                    Show more items
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Actions */}
           <div className="border-t pt-4 flex flex-col sm:flex-row gap-3">
-
             {order.status === "Pending" && (
               <button
                 onClick={() =>
                   updateStatus(
                     `https://rivo-ecommerce-db.onrender.com/staff/confirm-order/confirm/${id}`,
-                    "Confirmed"
+                    "Confirmed",
                   )
                 }
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
@@ -194,7 +213,7 @@ const UserOrder = () => {
                 onClick={() =>
                   updateStatus(
                     `https://rivo-ecommerce-db.onrender.com/staff/confirm-order/approve/${id}`,
-                    "Shipped"
+                    "Shipped",
                   )
                 }
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"

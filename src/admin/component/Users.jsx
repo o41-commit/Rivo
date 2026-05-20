@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "../../componnent/Spinner";
-import {
-  IoPersonOutline,
-  IoMailOutline,
-  IoCallOutline,
-} from "react-icons/io5";
+import { IoPersonOutline, IoMailOutline, IoCallOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const Users = () => {
@@ -12,9 +8,10 @@ const Users = () => {
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(8);
   const token = localStorage.getItem("token");
 
-  const getUser = async () => {
+  const getUser = React.useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch(
@@ -23,7 +20,7 @@ const Users = () => {
           headers: {
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (res.status === 403 || res.status === 401 || !token) {
@@ -39,20 +36,17 @@ const Users = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, navigate]);
 
   const makeStaff = async (id) => {
     setLoading(true);
     try {
-      await fetch(
-        `https://rivo-ecommerce-db.onrender.com/user/update/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await fetch(`https://rivo-ecommerce-db.onrender.com/user/update/${id}`, {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
 
       getUser();
     } catch (error) {
@@ -65,15 +59,12 @@ const Users = () => {
   const RemoveStaff = async (id) => {
     setLoading(true);
     try {
-      await fetch(
-        `https://rivo-ecommerce-db.onrender.com/user/disable/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await fetch(`https://rivo-ecommerce-db.onrender.com/user/disable/${id}`, {
+        method: "PATCH",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
 
       getUser();
     } catch (error) {
@@ -85,7 +76,7 @@ const Users = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   return (
     <div className="min-h-screen bg-[#f6fff9] p-4 sm:p-6">
@@ -103,7 +94,7 @@ const Users = () => {
         <div className="flex flex-col gap-4">
           {loading && <Spinner />}
 
-          {users.map((user) => (
+          {users.slice(0, visibleCount).map((user) => (
             <div
               key={user._id}
               className="bg-white p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
@@ -127,7 +118,7 @@ const Users = () => {
 
                     <span className="flex items-center gap-2">
                       <IoCallOutline size={14} />
-                      {user.num}
+                      {user.num || "No Phone Number Registered"}
                     </span>
 
                     <span className="mt-1">{user.role}</span>
@@ -150,9 +141,7 @@ const Users = () => {
                   Remove Staff
                 </button>
 
-                <button
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-white border border-green-900 text-green-900 font-medium hover:bg-green-50 transition"
-                >
+                <button className="w-full sm:w-auto px-4 py-2 rounded-lg bg-white border border-green-900 text-green-900 font-medium hover:bg-green-50 transition">
                   Message
                 </button>
               </div>
@@ -163,6 +152,17 @@ const Users = () => {
         {users.length === 0 && (
           <div className="text-center mt-10 text-green-800/70">
             No users found.
+          </div>
+        )}
+
+        {users.length > visibleCount && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setVisibleCount((c) => c + 8)}
+              className="px-4 py-2 bg-emerald-900 text-white rounded-lg hover:bg-emerald-800"
+            >
+              Show more
+            </button>
           </div>
         )}
       </div>

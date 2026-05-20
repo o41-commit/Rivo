@@ -8,13 +8,14 @@ const priceFormatter = new Intl.NumberFormat("en-NG");
 const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
-    const formatPrice = useCallback((price) => {
-      if (!price) return "0";
-      return priceFormatter.format(price);
-    }, []);
+  const formatPrice = useCallback((price) => {
+    if (!price) return "0";
+    return priceFormatter.format(price);
+  }, []);
 
   const getOrder = async () => {
     setLoading(true);
@@ -26,7 +27,7 @@ const Orders = () => {
             "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (res.status === 401 || res.status === 403 || !token) {
@@ -54,13 +55,13 @@ const Orders = () => {
             "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setOrders((prev) =>
         prev.map((order) =>
-          order._id === id ? { ...order, status: "confirmed" } : order
-        )
+          order._id === id ? { ...order, status: "confirmed" } : order,
+        ),
       );
     } catch (error) {
       console.error("Error confirming order:", error);
@@ -77,13 +78,13 @@ const Orders = () => {
             "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setOrders((prev) =>
         prev.map((order) =>
-          order._id === id ? { ...order, status: "shipped" } : order
-        )
+          order._id === id ? { ...order, status: "shipped" } : order,
+        ),
       );
     } catch (error) {
       console.error("Error shipping order:", error);
@@ -103,15 +104,14 @@ const Orders = () => {
     }
   };
 
-  const canConfirm = (order) =>
-    order.status?.toLowerCase() === "pending";
+  const canConfirm = (order) => order.status?.toLowerCase() === "pending";
 
-  const canShip = (order) =>
-    order.status?.toLowerCase() === "confirmed";
+  const canShip = (order) => order.status?.toLowerCase() === "confirmed";
 
-  const isCompleted = (order) =>
-    order.status?.toLowerCase() === "shipped";
+  const isCompleted = (order) => order.status?.toLowerCase() === "shipped";
 
+  // fetch once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getOrder();
   }, []);
@@ -119,12 +119,9 @@ const Orders = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
-
         {/* Header */}
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">
-            Orders Overview
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-800">Orders Overview</h2>
           <p className="text-gray-500 mt-1">
             Manage customer orders efficiently
           </p>
@@ -133,13 +130,12 @@ const Orders = () => {
         {loading && <Spinner />}
 
         <div className="grid gap-5">
-          {orders.map((order) => (
+          {orders.slice(0, visibleCount).map((order) => (
             <div
               key={order._id}
               className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition border"
             >
               <div className="flex justify-between items-center mb-4">
-
                 <div>
                   <h3 className="font-semibold text-lg text-gray-800">
                     Order #{order._id.slice(0, 8)}...
@@ -151,7 +147,7 @@ const Orders = () => {
 
                 <span
                   className={`px-3 py-1 text-sm rounded-full ${getStatusStyle(
-                    order.status
+                    order.status,
                   )}`}
                 >
                   {order.status}
@@ -164,13 +160,11 @@ const Orders = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 mt-5">
-
                 <Link to={`/user-order/${order._id}`}>
                   <button className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-black text-sm">
                     View Order
                   </button>
                 </Link>
-
 
                 {canConfirm(order) && (
                   <button
@@ -205,6 +199,17 @@ const Orders = () => {
         {orders.length === 0 && !loading && (
           <div className="text-center mt-12 text-gray-500">
             No orders available
+          </div>
+        )}
+
+        {orders.length > visibleCount && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setVisibleCount((c) => c + 6)}
+              className="px-4 py-2 bg-emerald-900 text-white rounded-lg hover:bg-emerald-800"
+            >
+              Show more
+            </button>
           </div>
         )}
       </div>

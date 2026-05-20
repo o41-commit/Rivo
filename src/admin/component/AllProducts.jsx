@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import Spinner from "../../componnent/Spinner";
 import { useNavigate } from "react-router-dom";
@@ -8,21 +8,27 @@ const AllProducts = () => {
 
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [visibleCount, setVisibleCount] = useState(10);
   const token = localStorage.getItem("token");
 
   const [products, setProducts] = useState([]);
 
+  const priceFormatter = useMemo(() => new Intl.NumberFormat("en-NG"), []);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const getProduct = async () => {
+  const getProduct = React.useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://rivo-ecommerce-db.onrender.com/product/items", {
-        headers: {
-          authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://rivo-ecommerce-db.onrender.com/product/items",
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (res.status === 401 || res.status === 403 || !token) {
         localStorage.removeItem("token");
@@ -37,20 +43,23 @@ const AllProducts = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, navigate]);
 
   // DELETE
   const deleteProduct = async (id) => {
     setLoading(true);
     try {
-      await fetch(`https://rivo-ecommerce-db.onrender.com/product/delete/${id}`, {
-        method: "DELETE",
-        headers: {
-          authorization: `Bearer ${token}`,
+      await fetch(
+        `https://rivo-ecommerce-db.onrender.com/product/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
-      getProduct(); 
+      getProduct();
     } catch (error) {
       console.error(error);
     } finally {
@@ -96,7 +105,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [getProduct]);
 
   const filtered = products.filter(
     (item) =>
@@ -132,7 +141,7 @@ const AllProducts = () => {
         {loading && <Spinner />}
 
         <div className="flex flex-col gap-4">
-          {filtered.map((item) => (
+          {filtered.slice(0, visibleCount).map((item) => (
             <div
               key={item._id}
               className="bg-white p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
@@ -149,8 +158,8 @@ const AllProducts = () => {
                 </p>
 
                 <p className="text-sm text-green-800/70 mt-2">
-                  ₦{item.price} • Size {item.size} • {item.colors} •{" "}
-                  {item.category}
+                  ₦{priceFormatter.format(item.price)} • Size {item.size} •{" "}
+                  {item.colors} • {item.category}
                 </p>
               </div>
 
@@ -176,6 +185,17 @@ const AllProducts = () => {
         {filtered.length === 0 && !loading && (
           <div className="text-center mt-10 text-green-800/70">
             No products found.
+          </div>
+        )}
+
+        {filtered.length > visibleCount && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setVisibleCount((c) => c + 10)}
+              className="px-4 py-2 bg-emerald-900 text-white rounded-lg hover:bg-emerald-800"
+            >
+              Show more
+            </button>
           </div>
         )}
       </div>

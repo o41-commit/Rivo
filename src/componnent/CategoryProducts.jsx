@@ -77,7 +77,7 @@ const CategoryProducts = ({ category }) => {
     fetchItems();
   }, [fetchItems]);
 
-  const confirmToken = async () =>{
+  const confirmToken = useCallback(async () =>{
     try {
         const res = await fetch(
           "https://rivo-ecommerce-db.onrender.com/profile/info",
@@ -90,14 +90,14 @@ const CategoryProducts = ({ category }) => {
           },
         );
 
-        if(!res || res.status == 403){
+        if(res.status === 403){
           localStorage.removeItem('token')
         }
 
     } catch (error) {
       console.error(error)
     }
-  }
+  }, [token])
 
 
   const addToCart = useCallback(
@@ -136,7 +136,7 @@ const CategoryProducts = ({ category }) => {
     [guestId, token],
   );
 
-  useEffect(() => confirmToken())
+  useEffect(() => confirmToken(), [confirmToken])
 
 
   if (pageLoading) {

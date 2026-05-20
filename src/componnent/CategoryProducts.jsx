@@ -77,6 +77,29 @@ const CategoryProducts = ({ category }) => {
     fetchItems();
   }, [fetchItems]);
 
+  const confirmToken = async () =>{
+    try {
+        const res = await fetch(
+          "https://rivo-ecommerce-db.onrender.com/profile/info",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if(!res || res.status == 403){
+          localStorage.removeItem('token')
+        }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
   const addToCart = useCallback(
     async (productId) => {
       try {
@@ -112,6 +135,9 @@ const CategoryProducts = ({ category }) => {
     },
     [guestId, token],
   );
+
+  useEffect(() => confirmToken())
+
 
   if (pageLoading) {
     return (

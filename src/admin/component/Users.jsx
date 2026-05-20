@@ -127,7 +127,7 @@ const Users = () => {
 
                     <span className="flex items-center gap-2">
                       <IoCallOutline size={14} />
-                      {user.phone}
+                      {user.num}
                     </span>
 
                     <span className="mt-1">{user.role}</span>

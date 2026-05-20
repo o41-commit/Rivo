@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { MdCheckCircle, MdLocalShipping } from "react-icons/md";
 import Spinner from "../../componnent/Spinner";
 import { useNavigate, Link } from "react-router-dom";
+
+const priceFormatter = new Intl.NumberFormat("en-NG");
 
 const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+
+    const formatPrice = useCallback((price) => {
+      if (!price) return "0";
+      return priceFormatter.format(price);
+    }, []);
 
   const getOrder = async () => {
     setLoading(true);
@@ -138,7 +145,7 @@ const Orders = () => {
                     Order #{order._id.slice(0, 8)}...
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {order.UserName || "Unknown User"}
+                    {order.userName || "Unknown User"}
                   </p>
                 </div>
 
@@ -153,7 +160,7 @@ const Orders = () => {
 
               <div className="text-sm text-gray-600 space-y-1">
                 <p>Items: {order.items?.length}</p>
-                <p>Total: ₦{order.totalPrice}</p>
+                <p>Total: ₦{formatPrice(order.totalPrice)}</p>
               </div>
 
               <div className="flex flex-wrap gap-3 mt-5">

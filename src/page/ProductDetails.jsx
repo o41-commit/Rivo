@@ -163,7 +163,7 @@ const ProductDetails = () => {
             <span className="font-semibold text-gray-800">
               Available Sizes:{" "}
             </span>
-            <span className="text-gray-600">{product.sizes?.join(", ") || "N/A"}</span>
+            <span className="text-gray-600">{sizes}</span>
           </div>
 
           {/* COLOR DISPLAY */}
@@ -171,7 +171,7 @@ const ProductDetails = () => {
             <span className="font-semibold text-gray-800">
               Available Colors:{" "}
             </span>
-            <span className="text-gray-600">{product.colors?.join(", ") || "N/A"}</span>
+            <span className="text-gray-600">{colors}</span>
           </div>
 
           {/* QUANTITY */}

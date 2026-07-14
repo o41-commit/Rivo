@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@theme {
+  /* Define custom CSS variables for animations */
+  --animate-fade-in-up: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-zoom-out: zoom-out 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  /* Custom Keyframes */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes zoom-out {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+}

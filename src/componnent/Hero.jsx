@@ -1,159 +1,61 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Hero1 from "../images/Hero1.png";
-import Hero2 from "../images/Hero2.png";
-import Hero3 from "../images/Hero3.jpg";
 import Hero4 from "../images/Hero4.jpg";
-import Hero5 from "../images/Hero5.jpg";
-import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
   return (
-    <div>
-      <div className="bg-[#C2EFD4] pt-[70px] md:pt-[100px] p-5">
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          spaceBetween={30}
-          loop={true}
-        >
-          <SwiperSlide>
-            <div className="mb-5 md:flex md:flex-row-reverse items-center gap-10">
-              <div className="w-full md:w-1/2 flex justify-center">
-                <img
-                  src={Hero4}
-                  alt="Hero"
-                  className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
-              </div>
-              <div className="md:max-w-[50%]">
-                <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
-                  Timeless Fashion, Modern Comfort
-                </h1>
-                <p className="text-[#224F34] md:text-[18px] my-3 mb-9">
-                  Clothes crafted to keep you stylish wherever you go.
-                </p>
+    <div className="relative min-h-[85vh] md:min-h-screen w-full flex items-center justify-center overflow-hidden bg-gray-950">
+      {/* Premium Background Image with Zoom-in Animation on Load */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 animate-[zoom-out_2s_ease-out_forwards]"
+        style={{ backgroundImage: `url(${Hero4})` }}
+      />
 
-                <Link
-                  to="/categories"
-                  className="bg-[#224F34] md:px-6 md:py-3 md:text-[20px] px-6 py-3 rounded-md shadow-lg-green-800/40  text-white "
-                >
-                  Explore
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="mb-5 md:flex md:flex-row-reverse items-center gap-10">
-              <div className="w-full md:w-1/2 flex justify-center">
-                <img
-                  src={Hero2}
-                  alt="Hero"
-                  className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
-              </div>
-              <div className="md:max-w-[55%]">
-                <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
-                  Evaluate Your Style With Our Latest Collection
-                </h1>
-                <p className="text-[#224F34]  my-3 mb-9">
-                  Discover premium outfits designed for comfort and confidence.
-                </p>
+      {/* Dark Overlay for Readability and Depth */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent backdrop-blur-[1px]" />
 
-                <Link
-                  to="/categories"
-                  className="bg-[#224F34] md:px-6 md:py-3 md:text-[20px] px-6 py-3 rounded-md shadow-lg-green-800/40  text-white "
-                >
-                  Explore
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="mb-5 md:flex md:flex-row-reverse items-center gap-10">
-              <div className="w-full md:w-1/2 flex justify-center">
-                <img
-                  src={Hero3}
-                  alt="Hero"
-                  className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
-              </div>
-              <div className="md:max-w-[50%]">
-                <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
-                  New Season. New Look. New You.
-                </h1>
-                <p className="text-[#224F34] md:text-[18px] my-3 mb-9">
-                  Step into fresh fashion built for everyday style.
-                </p>
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col items-start text-left text-white">
+        <div className="max-w-2xl space-y-6 animate-[fade-in-up_1s_ease-out_forwards]">
+          
+          {/* Subtle Accent Tag */}
+          <span className="inline-block text-xs md:text-sm font-semibold tracking-widest uppercase bg-white/10 backdrop-blur-md text-[#C2EFD4] px-4 py-2 rounded-full border border-white/20">
+            Exclusive Collection
+          </span>
 
-                <Link
-                  to="/categories"
-                  className="bg-[#224F34] md:px-6 md:py-3 md:text-[20px] px-6 py-3 rounded-md shadow-lg-green-800/40  text-white "
-                >
-                  Explore
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="mb-5 md:flex md:flex-row-reverse items-center gap-10">
-              <div className="w-full md:w-1/2 flex justify-center">
-                <img
-                  src={Hero1}
-                  alt="Hero"
-                  className="w-full max-w-[500px] h-[400px] md:h-[450px] object-cover  shadow-lg"
-                />
-              </div>
-              <div className="md:max-w-[50%]">
-                <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
-                  Discover and Find Your Own Fashion!
-                </h1>
-                <p className="text-[#224F34] md:text-[18px]  my-3 mb-9">
-                  Explore our curated collection of stylish clothing and
-                  accessories tailored to your unique taste.
-                </p>
+          {/* Main Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+            Timeless Fashion, <br />
+            <span className="text-[#C2EFD4] bg-clip-text">Modern Comfort</span>
+          </h1>
 
-                <Link
-                  to="/categories"
-                  className="bg-[#224F34] md:px-6 md:py-3 md:text-[20px] px-4 py-2 rounded-md shadow-lg-green-800/40  text-white "
-                >
-                  Explore
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="mb-5 md:flex md:flex-row-reverse items-center gap-10">
-              <div className="w-full md:w-1/2 flex justify-center">
-                <img
-                  src={Hero5}
-                  alt="Hero"
-                  className="w-full max-w-[500px] h-[350px] md:h-[450px] object-cover rounded-2xl shadow-lg"
-                />
-              </div>
-              <div className="md:max-w-[50%]">
-                <h1 className="text-[35px] md:text-[45px] font-semibold text-[#224F34]">
-                  Upgrade Your Wardrobe Today
-                </h1>
-                <p className="text-[#224F34] md:text-[18px] my-3 mb-9">
-                  Trend-driven pieces made for bold personalities.
-                </p>
+          {/* Subtitle */}
+          <p className="text-gray-200 text-lg md:text-xl max-w-lg font-light leading-relaxed">
+            Clothes beautifully crafted to keep you confident, sophisticated, and stylish wherever your journey takes you.
+          </p>
 
-                <Link
-                  to="/categories"
-                  className="bg-[#224F34] md:px-6 md:py-3 md:text-[20px] px-6 py-3 rounded-md shadow-lg-green-800/40  text-white "
+          {/* Premium Call to Action Button */}
+          <div className="pt-4">
+            <Link
+              to="/categories"
+              className="group relative inline-flex items-center justify-center px-8 py-4 text-base md:text-lg font-medium text-[#224F34] bg-[#C2EFD4] rounded-full overflow-hidden shadow-2xl transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-[#C2EFD4]/20"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Explore Collection
+                {/* Elegant Animated Arrow */}
+                <svg 
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
                 >
-                  Explore
-                </Link>
-              </div>
-            </div>
-          </SwiperSlide>
-        </Swiper>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </Link>
+          </div>
+
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,51 @@
-# React + Vite
+# Rivo E-commerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> An e-commerce storefront project built to present products through a clean shopping experience.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository is part of the **DevNado** project portfolio. It contains the code and supporting files for Rivo E-commerce, with an emphasis on practical product development, clear structure, and maintainable implementation.
 
-## React Compiler
+## Project focus
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Organize the experience and codebase around the project's core purpose.
+- Keep interfaces and workflows clear and responsive where applicable.
+- Support incremental improvements and future feature development.
+- Follow sensible security and configuration practices.
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Requirements
+
+- Node.js LTS (if this repository uses a Node.js toolchain)
+- npm
+- Git
+- Any additional services required by the project, such as a database, configured locally
+
+### Setup
+
+```bash
+git clone https://github.com/o41-commit/Rivo.git
+cd Rivo
+npm install
+```
+
+For frontend applications, start the development server with the script defined in `package.json` (commonly `npm run dev`). For backend or database projects, review the project's scripts and environment configuration before starting it.
+
+## Configuration and security
+
+- Check for an `.env.example` file or project documentation for required environment variables.
+- Never commit API keys, database credentials, access tokens, or other secrets.
+- Use a development database and verify configuration before deploying.
+
+## Contributing
+
+Keep changes focused, test the relevant workflows, and update this README when setup steps or project behavior changes.
+
+## Maintainer
+
+**DevNado** · [GitHub](https://github.com/o41-commit) · [Portfolio](https://dev-nado.vercel.app/)
+
+---
+
+<p align="center">Thoughtful engineering. Useful products. Continuous learning. ✦</p>
